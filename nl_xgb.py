@@ -39,6 +39,7 @@ data_new = data_new.replace({'completed': '1', 'filled': '0', 'withdrawn': '0', 
 #status designated as 1 can always change. I have used status= completed this time as it makes more business sense
 data =  data_new.dropna()
 
+#the next few lines of code seek to build a model using data that contains a fairly equal number of data for each class
 value_list = ['1']
 data_1 = data[data.status.isin(value_list)]
 data_12 = data_1[1:6695]
@@ -49,7 +50,7 @@ data_0 = data[data.status.isin(value_list1)]
 data_comb =pd.concat([data_12, data_0], axis=0)
 data_comb1 = shuffle(data_comb, random_state=0)
 
-y = data_comb1['status']
+y = data_comb1['status'] #status is what we are learning to predict
 
 del data_comb1['locum_id']
 del data_comb1['status']
