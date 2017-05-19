@@ -1,7 +1,12 @@
 import pandas as pd
+#import matplotlib.pyplot as plt
+#from sklearn.metrics import log_loss
+#from sklearn.grid_search import GridSearchCV
+#from sklearn.datasets import make_classification
+#from sklearn.ensemble import RandomForestClassifier
 from sklearn import cross_validation
 import xgboost as xgb
-
+from sklearn.utils import shuffle
 #=========================================================================================================================
 #datetime element of data is pretreated and formatted
 #Only date element of datetime is used in this algorithm
@@ -35,23 +40,34 @@ data_pra['practice_id']=data_pra.index
 data_ccg_pra = pd.merge(data_ccg, data_pra,how='left', on='ccg_id')
 data_new = pd.merge(data_ccg_pra, data_x, how='left', on='practice_id')
 
+data_new = data_new.replace({'completed': '1', 'filled': '0', 'withdrawn': '0', 'expired': '0', 'system_invalidated':'0'})
 data =  data_new.dropna()
 
-y = data['status']
-del data['status']
+value_list = ['1']
+data_1 = data[data.status.isin(value_list)]
+data_12 = data_1[1:6695]
 
-del data['ccg_name']
+value_list1 = ['0']
+data_0 = data[data.status.isin(value_list1)]
 
-X = data.astype(float)
+data_comb =pd.concat([data_12, data_0], axis=0)
+data_comb1 = shuffle(data_comb, random_state=0)
 
-X_new = X[1:46501]
-test =X[46501:len(X)] #created a test set to compute classification report
+y = data_comb1['status']
 
-y_new = y.replace({'completed': '1', 'filled': '2', 'withdrawn': '3', 'expired': '4', 'system_invalidated':'5'})
+del data_comb1['locum_id']
+del data_comb1['status']
+del data_comb1['ccg_name']
 
-Y = y_new.astype(float)
-Y_new = Y[1:46501]
-Y_test=Y[46501:len(Y)] #labels to be used to compute classification report
+X_1 = data_comb1.astype(float)
+#X_1 = shuffle(X, random_state=0)
+
+X_new = X_1[1:13001]
+test =X_1[13001:len(X_1)] #created a test set to compute classification report
+
+Y = y.astype(float)
+Y_new = Y[1:13001]
+Y_test=Y[13001:len(Y)] #labels to be used to compute classification report
 
 #############################################################################################################################
 #This section uses an appropriate algorithm to train a model
@@ -68,9 +84,9 @@ dvalid = xgb.DMatrix(X_val, y_val)
 
 params = {
     "objective": "multi:softprob",
-    "num_class": 6,
+    "num_class": 2,
     "booster": "gbtree",
-    "max_depth":2,#controls model complexity, higher values may cause overfitting, higher variance
+    "max_depth":4,#controls model complexity, higher values may cause overfitting, higher variance
     "eval_metric": "mlogloss",
     "eta": 0.1,# learning rate, you can reduce eta to prevent overfitting but remember to increase num_round
     "silent": 1,
@@ -108,3 +124,9 @@ Y_pred = gbm.predict(xgb.DMatrix(test),ntree_limit=gbm.best_iteration)
 from sklearn.metrics import classification_report
 
 print(classification_report(Y_test, Y_pred[:,1].round(0)))
+
+from sklearn.metrics import matthews_corrcoef
+
+print("mcc:", matthews_corrcoef(Y_test, Y_pred[:,1].round(0)))
+# The Matthews correlation coefficient (+1 represents a perfect prediction,
+# 0 an average random prediction and -1 and inverse prediction)
