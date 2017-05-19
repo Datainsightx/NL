@@ -36,6 +36,7 @@ data_ccg_pra = pd.merge(data_ccg, data_pra,how='left', on='ccg_id')
 data_new = pd.merge(data_ccg_pra, data_x, how='left', on='practice_id')
 
 data_new = data_new.replace({'completed': '1', 'filled': '0', 'withdrawn': '0', 'expired': '0', 'system_invalidated':'0'})
+#status designated as 1 can always change. I have used status= completed this time as it makes more business sense
 data =  data_new.dropna()
 
 value_list = ['1']
