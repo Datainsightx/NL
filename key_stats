@@ -43,6 +43,15 @@ Predict the likelihood of a given session to be filled...done using an ensemble 
 
 Provide a recommendation on how to improve the likelihood of a session being filled....use the feature importance
 
+ precision    recall  f1-score   support
+        0.0       0.99      0.92      0.95       193
+        1.0       0.92      0.99      0.96       194
+avg / total       0.96      0.95      0.95       387
+>>> from sklearn.metrics import matthews_corrcoef
+>>> print("mcc:", matthews_corrcoef(Y_test, Y_pred[:,1].round(0)))
+mcc: 0.909342857145
+>>> 
+
 
 
 
