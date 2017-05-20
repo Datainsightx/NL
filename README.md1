@@ -20,6 +20,9 @@ Recall is a measure of how many of the real filled jobs that have been identifie
 
 Finally, the code shows the importance of the features used to the effectiveness of the predictions
 A supplementary report (Network Locum report2) was added on Saturday as one of the optional tasks
+An additional recommendation is to provide predictive models for practices to help them plan staffing
+and the use of locums. This way, the fill rate can be improved.I am available to discuss many more 
+solutions using machine learning.
 
 All codes show what libraries are needed to run the code
 You can pip install these libraries in your command prompt 
