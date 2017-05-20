@@ -1,4 +1,4 @@
-There are three python files...Network_locum.py and predict_filled.py
+There are two python files...Network_locum.py and predict_filled.py
 
 In Network_locum.py:
 The 3 data sets (sessions, ccgs and practices are read as pandas dataframes
