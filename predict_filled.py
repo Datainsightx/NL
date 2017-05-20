@@ -100,7 +100,7 @@ gbm = xgb.train(params, dtrain, 2000, evals=watchlist,
 
 print("Training step")
 
-dtrain = xgb.DMatrix(X, y)
+dtrain = xgb.DMatrix(X_train, y_train)
 
 gbm = xgb.train(params, dtrain, 2000, verbose_eval=True)
 
