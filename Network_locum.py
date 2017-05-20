@@ -89,6 +89,8 @@ plt.show()
 #I used a histogram and not a boxplot to show the variation in fill rate for the CCGs because a
 #boxplot can only tell me whether data is symmetric. A histogram will show me the shape of the
 #symmetry
+import matplotlib
+matplotlib.style.use('ggplot')
 
 s.diff().hist(color='k', alpha=0.5, bins=10)
 plt.show()
