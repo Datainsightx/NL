@@ -86,7 +86,15 @@ sns.heatmap(correlationMatrix,annot=True)
 plt.show()
 
 #################################################################################################
+#I used a histogram and not a boxplot to show the variation in fill rate for the CCGs because a
+#boxplot can only tell me whether data is symmetric. A histogram will show me the shape of the
+#symmetry
 
+s.diff().hist(color='k', alpha=0.5, bins=10)
+plt.show()
+
+s['fill_rate'].plot.hist(alpha=0.5)
+plt.show()
 
 
 
