@@ -19,6 +19,9 @@ Recall measures the number of real completed that have been identified by the pr
 Computes Matthews correlation coefficient which indicates the strength of the predictions
 Finally, the code shows the importance of the features used to the effectiveness of the predictions
 
+To predict the lieklihood of a job being filled, the code is predict_filled.py
+A supplementary report (Network Locum report2) was added on Saturday as one of the optional tasks
+
 All codes show what libraries are needed to run the code
 You can pip install these libraries in your command prompt 
 Remember to cd to the python directory
