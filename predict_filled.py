@@ -58,14 +58,10 @@ del df['ccg_name']
 del df['locum_id']
 
 X = df.astype(float)
-#X = X_1[1:9001]
-#test =X_1[9001:len(X_1)]
-#Y = y[1:9001]
-#Y_test=y[9001:len(X_1)]
 
 X, y = shuffle(X, y, random_state=0)
 
-#split data into train and test sets
+#split data into train and test sets. test set to be used to compute precision and recall after prediction
 X_train1, X_val1, y_train1, y_val1 = cross_validation.train_test_split(X, y, train_size=0.90, stratify=y, random_state=0)
 
 # Split train data into train and validation sets
