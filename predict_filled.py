@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn import cross_validation
 import xgboost as xgb
 from sklearn.utils import shuffle
+from sklearn.metrics import classification_report
 #=========================================================================================================================
 #datetime element of data is pretreated and formatted
 #Only date element of datetime is used in this algorithm
@@ -65,7 +66,7 @@ X, y = shuffle(X, y, random_state=0)
 X_train1, X_val1, y_train1, y_val1 = cross_validation.train_test_split(X, y, train_size=0.90, stratify=y, random_state=0)
 
 # Split train data into train and validation sets
-X_train, X_val, y_train, y_val = cross_validation.train_test_split(X_train1, y_train1, train_size=0.80, random_state=0)
+X_train, X_val, y_train, y_val = cross_validation.train_test_split(X_train1, y_train1, train_size=0.90, random_state=0)
 #===========================================================================================================================
 #Algorithm will train a model using the training data
 
@@ -100,8 +101,6 @@ gbm = xgb.train(params, dtrain, 2000, evals=watchlist,
 
 print("Training step")
 
-dtrain = xgb.DMatrix(X_train, y_train)
-
 gbm = xgb.train(params, dtrain, 2000, verbose_eval=True)
 
 importance = gbm.get_fscore()
@@ -111,7 +110,7 @@ print("The importance of the features:", importance)
 Y_pred = gbm.predict(xgb.DMatrix(X_val1),ntree_limit=gbm.best_iteration)
 
 #Classification report to evalute true positive, false positive, true negative, false negative
-from sklearn.metrics import classification_report
+
 print(classification_report(y_val1, Y_pred))
 
 
