@@ -1,3 +1,5 @@
+Note: The performance of predict_filled.py is now only slightly different from what is in report2
+
 There are two python files...Network_locum.py and predict_filled.py
 
 In Network_locum.py:
