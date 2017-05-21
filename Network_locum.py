@@ -22,12 +22,12 @@ print(x['posted_datetime'].describe().transpose()) #describes the key stats for 
 #and then count the number of completed for each ccg_id
 
 y = data_new[['ccg_id','status']] 
-value_list = ['completed']
+value_list = ['filled']
 y_new = y[y.status.isin(value_list)]
 y_comp = y_new.groupby(['ccg_id']).agg({'status':'count'})
 
 z = data_new.groupby(['ccg_id']).agg({'hourly_rate':'mean'})
-print(z['hourly_rate'].describe().transpose()) #describes the key stats for the hourly_rate column
+print(z['hourly_rate'].describe()) #describes the key stats for the hourly_rate column
 
 data1 = pd.concat([x, y_comp, z], axis=1)
 data = data1.dropna()
@@ -35,17 +35,17 @@ data = data1.dropna()
 data['n_posted_jobs'] = data['posted_datetime']
 del data['posted_datetime']
 
-data['n_completed_jobs'] = data['status']
+data['n_filled_jobs'] = data['status']
 del data['status']
 
 data['ave_hourly_rate'] = data['hourly_rate']
 del data['hourly_rate']
 
-data['fill_rate'] = (data['n_completed_jobs']/data['n_posted_jobs'])*100 #calculate fill rate
+data['fill_rate'] = (data['n_filled_jobs']/data['n_posted_jobs'])*100 #calculate fill rate
 
 data['ccg_id'] = data.index
 
-data = data[['ccg_id', 'ave_hourly_rate', 'n_posted_jobs', 'n_completed_jobs', 'fill_rate']]
+data = data[['ccg_id', 'ave_hourly_rate', 'n_posted_jobs', 'n_filled_jobs', 'fill_rate']]
 data.dropna(axis=0, how='any')
 
 
