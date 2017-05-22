@@ -17,10 +17,10 @@ print(data_new['status'].value_counts())
 ####################################################################################################
 x = data_new.groupby(['ccg_id']).agg({'posted_datetime':'count'}) #count the number of posted jobs per ccg_id
 
-print(x['posted_datetime'].describe().transpose()) #describes the key stats for the total number of postings
+print(x['posted_datetime'].describe()) #describes the key stats for the total number of postings
 
-#select ccg_id and status column, select ccg_id columns where status is completed
-#and then count the number of completed for each ccg_id
+#select ccg_id and status column, select ccg_id columns where status is filled
+#and then count the number of filled for each ccg_id
 
 y = data_new[['ccg_id','status']] 
 value_list = ['filled']
